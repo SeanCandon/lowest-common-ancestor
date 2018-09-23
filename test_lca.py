@@ -13,3 +13,13 @@ class TestLCA(unittest.TestCase):
         root.right.right = lca.Node(7)
         ans = lca.findLCA(root, 5, 4)
         self.assertEqual(ans, 2)
+        ans2 = lca.findLCA(root, 5, 7)
+        self.assertEqual(ans2, 1)
+
+    def test_emptyGraph(self):
+        root = None
+        self.assertEqual((lca.findLCA(root, 2, 1)), -1)
+
+    def test_graphOneNode(self):
+        root = lca.Node(1)
+        self.assertEqual((lca.findLCA(root, 1, 1)), 1)
