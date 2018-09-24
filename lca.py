@@ -6,6 +6,18 @@ class Node:
         self.right = None
 
 
+def printDepthFirst(n, ans):
+
+    if n!=None:
+        ans += [n.key]
+
+    if n.left!=None:
+        printDepthFirst(n.left, ans)
+
+    if n.right!=None:
+        printDepthFirst(n.right, ans)
+
+
 def findPath(root, path, k):
 
     if root is None:

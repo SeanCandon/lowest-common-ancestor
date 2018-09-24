@@ -32,5 +32,6 @@ class TestLCA(unittest.TestCase):
         root.left.right = lca.Node(5)
         root.right.left = lca.Node(6)
         root.right.right = lca.Node(7)
-        ans = lca.printDepthFirst()
-        self.assertEqual(ans, "1, 2, 4, 5, 3, 6, 7")
+        ans = []
+        lca.printDepthFirst(root, ans)
+        self.assertEqual(ans, [1, 2, 4, 5, 3, 6, 7])
