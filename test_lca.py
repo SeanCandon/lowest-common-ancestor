@@ -26,13 +26,15 @@ class TestLCA(unittest.TestCase):
         # root = lca.Node(1)
         # self.assertEqual((lca.findLCA(root, 1, 1)), 1)
 #
-    # def test_PrintTree(self):
-        # root = lca.Node(1)
-        # root.left = lca.Node(2)
-        # root.right = lca.Node(3)
-        # root.left.left = lca.Node(4)
-        # root.left.right = lca.Node(5)
-        # root.right.left = lca.Node(6)
-        # root.right.right = lca.Node(7)
-        # ans = []
-        # lca.printTree(root, ans)
+    def test_print_tree(self):
+        tree = lca.BST()
+        tree.set_root(1)
+        tree.insert(5)
+        tree.insert(2)
+        tree.insert(8)
+        tree.insert(7)
+        tree.insert(11)
+        tree.insert(4)
+        ans = []
+        tree.print_tree(tree.root, ans)
+        self.assertEqual(ans, [1, 5, 2, 4, 8, 7, 11])

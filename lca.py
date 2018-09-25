@@ -63,10 +63,10 @@ class BST:
             ans += [n.key]
 
         if n.left!=None:
-            print_tree(n.left, ans)
+            self.print_tree(n.left, ans)
 
         if n.right!=None:
-            print_tree(n.right, ans)
+            self.print_tree(n.right, ans)
 
 
     def find_path(self, root, path, k):
