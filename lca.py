@@ -6,16 +6,16 @@ class Node:
         self.right = None
 
 
-def printDepthFirst(n, ans):
+def printTree(n, ans):
 
     if n!=None:
         ans += [n.key]
 
     if n.left!=None:
-        printDepthFirst(n.left, ans)
+        printTree(n.left, ans)
 
     if n.right!=None:
-        printDepthFirst(n.right, ans)
+        printTree(n.right, ans)
 
 
 def findPath(root, path, k):
