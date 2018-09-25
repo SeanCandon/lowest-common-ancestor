@@ -19,6 +19,8 @@ class Node:
 
 class BST:
 
+    root = None
+
     def ___init__(self):
         self.root = None
 
@@ -86,13 +88,16 @@ class BST:
         path.pop()
         return False
 
-    def find_lca(self, root, n1, n2):
+    def find_lca(self, n1, n2):
+
+        if self.root is None:
+            return -1
 
         path1 = []
         path2 = []
 
-        if(not self.find_path(root, path1, n1) or not
-           self.find_path(root, path2, n2)):
+        if(not self.find_path(self.root, path1, n1) or not
+           self.find_path(self.root, path2, n2)):
             return -1
 
         i=0
