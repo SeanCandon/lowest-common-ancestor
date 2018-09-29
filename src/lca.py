@@ -8,9 +8,6 @@ class Node:
     def get_key(self):
         return self.key
 
-    def set_key(self, key):
-        self.key = key
-
     def get_left(self):
         return self.left
 
