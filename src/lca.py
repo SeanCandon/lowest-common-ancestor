@@ -40,13 +40,13 @@ class BST:
 
     def insert_node(self, curr, key):
         if (key <= curr.key):
-            if(curr.left):
-                self.insert_node(curr.left, key)
+            if(curr.get_left()):
+                self.insert_node(curr.get_left(), key)
             else:
                 curr.left = Node(key)
-        elif(key > curr.key):
-            if(curr.right):
-                self.insert_node(curr.right, key)
+        elif(key > curr.get_key()):
+            if(curr.get_right()):
+                self.insert_node(curr.get_right(), key)
             else:
                 curr.right = Node(key)
 
