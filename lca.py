@@ -20,18 +20,22 @@ class Node:
 class BST:
 
     root = None
+    size = 0
 
     def ___init__(self):
         self.root = None
 
     def set_root(self, key):
         self.root = Node(key)
+        self.size = 1
 
     def insert(self, key):
         if(self.root is None):
             self.set_root(key)
         else:
             self.insert_node(self.root, key)
+            self.size+=1
+
 
 
     def insert_node(self, curr, key):
@@ -59,16 +63,22 @@ class BST:
         else:
             return self.find_node(curr.right, key)
 
-    def print_tree(self, n, ans):
+    def print_tree(self, ans):
+        if self.size is 0:
+            ans = []
+        else:
+            self.__print_tree(self.root, ans)
+
+    def __print_tree(self, n, ans):
 
         if n!=None:
             ans += [n.key]
 
         if n.left!=None:
-            self.print_tree(n.left, ans)
+            self.__print_tree(n.left, ans)
 
         if n.right!=None:
-            self.print_tree(n.right, ans)
+            self.__print_tree(n.right, ans)
 
 
     def find_path(self, root, path, k):

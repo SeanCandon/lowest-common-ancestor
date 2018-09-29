@@ -45,6 +45,19 @@ class TestLCA(unittest.TestCase):
         tree.find_path(tree.root, path, 11)
         self.assertEqual(path, [1, 5, 8, 11])
 
+    def test_printTreeEmpty(self):
+        tree = lca.BST()
+        ans = []
+        tree.print_tree(ans)
+        self.assertEqual(ans, [])
+
+    def test_printTreeOneNode(self):
+        tree = lca.BST()
+        tree.set_root(1)
+        ans = []
+        tree.print_tree(ans)
+        self.assertEqual(ans, [1])
+
 
     def test_print_tree(self):
         tree = lca.BST()
@@ -56,5 +69,5 @@ class TestLCA(unittest.TestCase):
         tree.insert(11)
         tree.insert(4)
         ans = []
-        tree.print_tree(tree.root, ans)
+        tree.print_tree(ans)
         self.assertEqual(ans, [1, 5, 2, 4, 8, 7, 11])
