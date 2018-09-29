@@ -51,6 +51,7 @@ class TestLCA(unittest.TestCase):
         tree.print_tree(ans)
         self.assertEqual(ans, [])
 
+
     def test_printTreeOneNode(self):
         tree = lca.BST()
         tree.set_root(1)
