@@ -22,8 +22,8 @@ class BST:
     root = None
     size = 0
 
-    def ___init__(self):
-        self.root = None
+    # def ___init__(self):
+
 
     def set_root(self, key):
         self.root = Node(key)
@@ -80,19 +80,25 @@ class BST:
         if n.right!=None:
             self.__print_tree(n.right, ans)
 
+    def find_path(self, path, k):
 
-    def find_path(self, root, path, k):
-
-        if root is None:
+        if self.size is 0:
             return False
+        else:
+            return self.__find_path(self.root, path, k)
+
+    def __find_path(self, root, path, k):
+
+        #if root is None:
+            #return False
 
         path.append(root.key)
 
         if root.key == k:
             return True
 
-        if((root.left!=None and self.find_path(root.left, path, k)) or
-           (root.right!=None and self.find_path(root.right, path, k))):
+        if((root.left!=None and self.__find_path(root.left, path, k)) or
+           (root.right!=None and self.__find_path(root.right, path, k))):
             return True
 
         path.pop()
@@ -106,8 +112,8 @@ class BST:
         path1 = []
         path2 = []
 
-        if(not self.find_path(self.root, path1, n1) or not
-           self.find_path(self.root, path2, n2)):
+        if(not self.find_path(path1, n1) or not
+           self.find_path(path2, n2)):
             return -1
 
         i=0

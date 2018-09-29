@@ -38,11 +38,17 @@ class TestLCA(unittest.TestCase):
         tree.insert(11)
         tree.insert(4)
         path = []
-        tree.find_path(tree.root, path, 4)
+        tree.find_path(path, 4)
         self.assertEqual(path, [1, 5, 2, 4])
         path = []
-        tree.find_path(tree.root, path, 11)
+        tree.find_path(path, 11)
         self.assertEqual(path, [1, 5, 8, 11])
+
+    def test_find_pathEmpty(self):
+        tree = lca.BST()
+        path = []
+        self.assertEqual(tree.find_path(path, 3), False)
+        self.assertEqual(path, [])
 
     def test_printTreeEmpty(self):
         tree = lca.BST()
