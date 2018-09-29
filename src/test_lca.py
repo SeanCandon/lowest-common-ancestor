@@ -17,7 +17,6 @@ class TestLCA(unittest.TestCase):
         ans = tree.find_lca(11, 7)
         self.assertEqual(ans, 8)
 
-
     def test_emptyGraph(self):
         tree = lca.BST()
         self.assertEqual((tree.find_lca(2, 1)), -1)
@@ -72,3 +71,28 @@ class TestLCA(unittest.TestCase):
         ans = []
         tree.print_tree(ans)
         self.assertEqual(ans, [1, 5, 2, 4, 8, 7, 11])
+
+    def test_findTrue(self):
+        tree = lca.BST()
+        tree.set_root(1)
+        tree.insert(5)
+        tree.insert(2)
+        tree.insert(8)
+        tree.insert(7)
+        tree.insert(11)
+        tree.insert(4)
+        n = tree.find(7)
+        assert n == True
+        self.assertEqual(tree.find(2), True)
+
+    def test_findFalse(self):
+        tree = lca.BST()
+        self.assertEqual(tree.find(1), False)
+        tree.set_root(1)
+        tree.insert(5)
+        tree.insert(2)
+        tree.insert(8)
+        tree.insert(7)
+        tree.insert(11)
+        tree.insert(4)
+        self.assertEqual(tree.find(6), False)

@@ -58,7 +58,7 @@ class BST:
             return False
         elif(key is curr.key):
             return True
-        elif(val < curr.key):
+        elif(key < curr.key):
             return self.find_node(curr.left, key)
         else:
             return self.find_node(curr.right, key)
