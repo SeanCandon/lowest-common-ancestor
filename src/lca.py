@@ -1,5 +1,6 @@
 class Node:
-
+    #node class made up of constructor
+    #and some getters and setters
     def  __init__(self, key):
         self.key = key
         self.left = None
@@ -14,58 +15,60 @@ class Node:
     def get_right(self):
         return self.right
 
+#tree class
 class BST:
 
     root = None
     size = 0
 
-    # def ___init__(self):
-
-
     def set_root(self, key):
         self.root = Node(key)
         self.size = 1
 
+    #insert key into tree, calls private insert method
     def insert(self, key):
         if(self.root is None):
             self.set_root(key)
         else:
-            self.insert_node(self.root, key)
+            self.__insert(self.root, key)
             self.size+=1
 
-
-
-    def insert_node(self, curr, key):
+    #private insert recursive method
+    def __insert(self, curr, key):
         if (key <= curr.key):
             if(curr.get_left()):
-                self.insert_node(curr.get_left(), key)
+                self.__insert(curr.get_left(), key)
             else:
                 curr.left = Node(key)
         elif(key > curr.get_key()):
             if(curr.get_right()):
-                self.insert_node(curr.get_right(), key)
+                self.__insert(curr.get_right(), key)
             else:
                 curr.right = Node(key)
 
+    #find key in tree, calls private recursive method
     def find(self, key):
-        return self.find_node(self.root, key)
+        return self.__find(self.root, key)
 
-    def find_node(self, curr, key):
+    #private recursive find method
+    def __find(self, curr, key):
         if(curr is None):
             return False
         elif(key is curr.key):
             return True
         elif(key < curr.key):
-            return self.find_node(curr.left, key)
+            return self.__find(curr.left, key)
         else:
-            return self.find_node(curr.right, key)
+            return self.__find(curr.right, key)
 
+    #print tree depth first, calls privte method
     def print_tree(self, ans):
         if self.size is 0:
             ans = []
         else:
             self.__print_tree(self.root, ans)
 
+    #private print method
     def __print_tree(self, n, ans):
 
         if n!=None:
@@ -77,6 +80,7 @@ class BST:
         if n.right!=None:
             self.__print_tree(n.right, ans)
 
+    #find path to node from root, called by findLCA
     def find_path(self, path, k):
 
         if self.size is 0:
@@ -84,6 +88,7 @@ class BST:
         else:
             return self.__find_path(self.root, path, k)
 
+    #private find path recursive method
     def __find_path(self, root, path, k):
 
         #if root is None:
@@ -101,6 +106,8 @@ class BST:
         path.pop()
         return False
 
+    #method to find lowest common ancestor
+    #of two nodes n1 and n2
     def find_lca(self, n1, n2):
 
         if self.root is None:
@@ -120,14 +127,3 @@ class BST:
             i+=1
 
         return path1[i-1]
-
-
-
-# tree = BST()
-# tree.set_root(1)
-# tree.insert(5)
-# tree.insert(2)
-# tree.insert(8)
-# tree.insert(7)
-# tree.insert(11)
-# tree.insert(4)
