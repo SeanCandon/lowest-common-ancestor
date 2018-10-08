@@ -5,7 +5,7 @@ class TestLCA(unittest.TestCase):
 
     #tests find lca for basic graph
     def test_simpleFindLCA(self):
-        tree = lca.BST()
+        tree = lca.Graph()
         tree.set_root(1)
         tree.insert(5)
         tree.insert(2)
@@ -22,19 +22,19 @@ class TestLCA(unittest.TestCase):
 
     #tests lca for empty graph
     def test_emptyGraph(self):
-        tree = lca.BST()
+        tree = lca.Graph()
         self.assertEqual((tree.find_lca(2, 1)), -1)
 
     #tests lca for graph of size 1
     def test_graphOneNode(self):
-        tree = lca.BST()
+        tree = lca.Graph()
         tree.set_root(5)
         self.assertEqual((tree.find_lca(5, 5)),
                          tree.root.key)
 
     #tests find path
     def test_findPath(self):
-        tree = lca.BST()
+        tree = lca.Graph()
         tree.insert(1)
         tree.insert(5)
         tree.insert(2)
@@ -56,21 +56,21 @@ class TestLCA(unittest.TestCase):
 
     #tests find path for empty graph, expected false
     def test_find_pathEmpty(self):
-        tree = lca.BST()
+        tree = lca.Graph()
         path = []
         self.assertEqual(tree.find_path(path, 3), False)
         self.assertEqual(path, [])
 
     #tests print tree for empty tree
     def test_printTreeEmpty(self):
-        tree = lca.BST()
+        tree = lca.Graph()
         ans = []
         tree.print_tree(ans)
         self.assertEqual(ans, [])
 
     #tests print tree for graph of size 1
     def test_printTreeOneNode(self):
-        tree = lca.BST()
+        tree = lca.Graph()
         tree.set_root(1)
         ans = []
         tree.print_tree(ans)
@@ -78,7 +78,7 @@ class TestLCA(unittest.TestCase):
 
     #tests print tree for standard tree of size>1
     def test_print_tree(self):
-        tree = lca.BST()
+        tree = lca.Graph()
         tree.set_root(1)
         tree.insert(5)
         tree.insert(2)
@@ -93,7 +93,7 @@ class TestLCA(unittest.TestCase):
     #tests find for key that is present in tree,
     #should be true
     def test_findTrue(self):
-        tree = lca.BST()
+        tree = lca.Graph()
         tree.set_root(1)
         tree.insert(5)
         tree.insert(2)
@@ -108,7 +108,7 @@ class TestLCA(unittest.TestCase):
     #tests find for key that isn't present in tree,
     #should be false
     def test_findFalse(self):
-        tree = lca.BST()
+        tree = lca.Graph()
         self.assertEqual(tree.find(1), False)
         tree.set_root(1)
         tree.insert(5)

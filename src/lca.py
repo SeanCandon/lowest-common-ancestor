@@ -5,6 +5,8 @@ class Node:
         self.key = key
         self.left = None
         self.right = None
+        self.parents = list()
+        self.children = list()
 
     def get_key(self):
         return self.key
@@ -15,15 +17,53 @@ class Node:
     def get_right(self):
         return self.right
 
-#tree class
-class BST:
+#graph class
+class Graph:
 
     root = None
     size = 0
 
+    def __init__(self):
+        self.vertices = list()
+        self.nodes = list()
+
+    def get_node(self, key1):
+        if key1 not in self.vertices:
+            return None
+        for n in self.nodes:
+            if n.key == key1:
+                return n
+
+    def add_edge(self, key1, key2):
+        if key1 not in self.vertices:
+            return False
+        if key2 not in self.vertices:
+            self.vertices.extend([key2])
+            n = Node(key2)
+            par = self.get_node(key1)
+            if par != None:
+                n.parents.extend([par])
+                par.children.extend([n])
+                self.nodes.extend([n])
+                return True
+            else:
+                return False
+        else:
+            n1 = self.get_node(key1)
+            n2 = self.get_node(key2)
+            self.nodes.remove(n1)
+            self.nodes.remove(n2)
+            n1.children.extend([n2])
+            n2.parents.extend([n1])
+            self.nodes.extend([n1])
+            self.nodes.extend([n2])
+            return True
+
     def set_root(self, key):
         self.root = Node(key)
         self.size = 1
+        self.vertices.extend([key])
+        self.nodes.extend([self.root])
 
     #insert key into tree, calls private insert method
     def insert(self, key):
@@ -127,3 +167,10 @@ class BST:
             i+=1
 
         return path1[i-1]
+
+
+g = Graph()
+g.set_root(1)
+g.add_edge(1, 2)
+v = g.vertices
+print(*v)
