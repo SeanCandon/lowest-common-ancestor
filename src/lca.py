@@ -224,7 +224,7 @@ class Graph:
         self.__find_ancestors(n2, n2, n2Anc)
 
         deepest  = 0
-        lca  = self.root
+        lca  = self.root.key
 
         for x in n1Anc:
             for y in n2Anc:
@@ -232,8 +232,7 @@ class Graph:
                     deepest = (self.get_node(x)).depth
                     lca = x
 
-
-        return lca.key
+        return lca
 
     def __find_ancestors(self, n, orig, anc):
 
@@ -257,7 +256,10 @@ g.add_edge(1, 3)
 g.add_edge(2, 3)
 g.add_edge(2, 4)
 g.add_edge(2, 5)
-print(g.find_lca(4, 2))
+g.add_edge(5, 3)
+g.add_edge(3, 6)
+g.add_edge(6, 7)
+print(g.find_lca(4, 7))
 #print(b)
 #print(g.find_path(1, 1))
 #b = g.add_edge(2, 1)
