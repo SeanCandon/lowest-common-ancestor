@@ -7,6 +7,7 @@ class Node:
         self.right = None
         self.parents = list()
         self.children = list()
+        self.depth = None
 
     def get_key(self):
         return self.key
@@ -46,6 +47,7 @@ class Graph:
                 n.parents.extend([par])
                 par.children.extend([n])
                 self.nodes.extend([n])
+                n.depth = par.depth+1
                 return True
             else:
                 return False
@@ -64,6 +66,10 @@ class Graph:
                 n2.parents.remove(n1)
                 return False
             else:
+                if n2.depth > (n1.depth+1):
+                    self.nodes.remove(n2)
+                    n2.depth = n1.depth+1
+                    self.nodes.extend([n2])
                 return True
 
     def set_root(self, key):
@@ -71,6 +77,7 @@ class Graph:
         self.size = 1
         self.vertices.extend([key])
         self.nodes.extend([self.root])
+        self.root.depth = 0
 
     #insert key into tree, calls private insert method
     def insert(self, key):
@@ -198,31 +205,59 @@ class Graph:
         #return False
 
     #method to find lowest common ancestor
-    #of two nodes n1 and n2
-    #def find_lca(self, n1, n2):
+    #of two nodes with keys k1 and k2
+    def find_lca(self, k1, k2):
 
-    #    if self.root is None:
-    #        return -1
+        if self.root is None:
+            return None
 
-    #    path1 = []
-    #    path2 = []
+        n1 = self.get_node(k1)
+        n2 = self.get_node(k2)
 
-    #    if(not self.find_path(path1, n1) or not
-    #       self.find_path(path2, n2)):
-    #        return -1
+        if n1 is None or n2 is None:
+            return None
 
-    #    i=0
-    #    while(i<len(path1) and i<len(path2)):
-    #        if(path1[i] != path2[i]):
-    #            break
-    #        i+=1
+        n1Anc = list()
+        n2Anc = list()
 
-    #    return path1[i-1]
+        self.__find_ancestors(n1, n1, n1Anc)
+        self.__find_ancestors(n2, n2, n2Anc)
+
+        deepest  = 0
+        lca  = self.root
+
+        for x in n1Anc:
+            for y in n2Anc:
+                if x == y and (self.get_node(x)).depth>deepest:
+                    deepest = (self.get_node(x)).depth
+                    lca = x
+
+
+        return lca.key
+
+    def __find_ancestors(self, n, orig, anc):
+
+        par = n.parents
+
+        if len(par) == 0:
+            return True
+
+        for p in par:
+            if p.key not in anc and p.key != orig.key:
+                anc.extend([p.key])
+                self.__find_ancestors(p, orig, anc)
+
+        return True
 
 
 g = Graph()
 g.set_root(1)
-b = g.add_edge(1, 2)
+g.add_edge(1, 2)
+g.add_edge(1, 3)
+g.add_edge(2, 3)
+g.add_edge(2, 4)
+g.add_edge(2, 5)
+print(g.find_lca(4, 2))
 #print(b)
 #print(g.find_path(1, 1))
 #b = g.add_edge(2, 1)
