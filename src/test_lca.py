@@ -3,118 +3,84 @@ import lca
 
 class TestLCA(unittest.TestCase):
 
-    #tests find lca for basic graph
-    def test_simpleFindLCA(self):
-        tree = lca.BST()
-        tree.set_root(1)
-        tree.insert(5)
-        tree.insert(2)
-        tree.insert(8)
-        tree.insert(7)
-        tree.insert(11)
-        tree.insert(4)
-        ans = tree.find_lca(8, 4)
-        self.assertEqual(ans, 5)
-        ans = tree.find_lca(11, 7)
-        self.assertEqual(ans, 8)
-        #tests find lca for non-existent node
-        self.assertEqual(tree.find_lca(6, 4), -1)
+    def test_insert(self):
+        g = lca.Graph()
+        g.set_root(1)
+        g.insert(1, 2)
+        n = g.get_node(1)
+        self.assertEqual(len(n.children), 1)
+        self.assertEqual(len(n.parents), 0)
+        n = g.get_node(2)
+        self.assertEqual(len(n.children), 0)
+        self.assertEqual(len(n.parents), 1)
+        g.insert(1, 3)
+        n = g.get_node(1)
+        self.assertEqual(len(n.children), 2)
+        self.assertEqual(len(n.parents), 0)
+        self.assertEqual(n.children[0].key, 2)
+        self.assertEqual(n.children[1].key, 3)
+        g.insert(2, 3)
+        n = g.get_node(3)
+        self.assertEqual(len(n.parents), 2)
+        self.assertEqual(n.parents[0].key, 1)
+        self.assertEqual(n.parents[1].key, 2)
+        self.assertEqual(g.insert(8, 2), False)
 
-    #tests lca for empty graph
-    def test_emptyGraph(self):
-        tree = lca.BST()
-        self.assertEqual((tree.find_lca(2, 1)), -1)
+    def test_insertWithCycles(self):
+        g = lca.Graph()
+        g.set_root(1)
+        b = g.insert(1, 2)
+        self.assertEqual(b, True)
+        b = g.insert(1, 3)
+        self.assertEqual(b, True)
+        b = g.insert(2, 3)
+        self.assertEqual(b, True)
+        b = g.insert(3, 1)
+        self.assertEqual(b, False)
+        b = g.insert(2, 4)
+        self.assertEqual(b, True)
+        self.assertEqual((g.get_node(2)).children[0].key, 3)
+        self.assertEqual((g.get_node(2)).children[1].key, 4)
+        self.assertEqual(len(g.get_node(2).children), 2)
+        b = g.insert(4, 1)
+        self.assertEqual(b, False)
 
-    #tests lca for graph of size 1
-    def test_graphOneNode(self):
-        tree = lca.BST()
-        tree.set_root(5)
-        self.assertEqual((tree.find_lca(5, 5)),
-                         tree.root.key)
+    def test_findLCA(self):
+        g = lca.Graph()
+        self.assertEqual(g.find_lca(1, 2), None)
+        g.set_root(1)
+        g.insert(1, 2)
+        g.insert(1, 3)
+        g.insert(2, 3)
+        g.insert(2, 4)
+        g.insert(2, 5)
+        g.insert(5, 3)
+        g.insert(3, 6)
+        g.insert(6, 7)
+        self.assertEqual(g.find_lca(4, 7), 2)
+        self.assertEqual(g.find_lca(5, 6), 2)
+        self.assertEqual(g.find_lca(4, 2), 1)
+        self.assertEqual(g.find_lca(6, 7), 5)
+        self.assertEqual(g.find_lca(10, 9), None)
+        self.assertEqual(g.find_lca(1, 7), 1)
 
-    #tests find path
-    def test_findPath(self):
-        tree = lca.BST()
-        tree.insert(1)
-        tree.insert(5)
-        tree.insert(2)
-        tree.insert(8)
-        tree.insert(7)
-        tree.insert(11)
-        tree.insert(4)
-        path = []
-        #tests find path to key 4
-        tree.find_path(path, 4)
-        self.assertEqual(path, [1, 5, 2, 4])
-        path = []
-        #tests find path to key 11
-        tree.find_path(path, 11)
-        self.assertEqual(path, [1, 5, 8, 11])
-        path = []
-        #tests find path to non-existent key
-        self.assertEqual(tree.find_path(path, 6), False)
-
-    #tests find path for empty graph, expected false
-    def test_find_pathEmpty(self):
-        tree = lca.BST()
-        path = []
-        self.assertEqual(tree.find_path(path, 3), False)
-        self.assertEqual(path, [])
-
-    #tests print tree for empty tree
-    def test_printTreeEmpty(self):
-        tree = lca.BST()
-        ans = []
-        tree.print_tree(ans)
-        self.assertEqual(ans, [])
-
-    #tests print tree for graph of size 1
-    def test_printTreeOneNode(self):
-        tree = lca.BST()
-        tree.set_root(1)
-        ans = []
-        tree.print_tree(ans)
-        self.assertEqual(ans, [1])
-
-    #tests print tree for standard tree of size>1
-    def test_print_tree(self):
-        tree = lca.BST()
-        tree.set_root(1)
-        tree.insert(5)
-        tree.insert(2)
-        tree.insert(8)
-        tree.insert(7)
-        tree.insert(11)
-        tree.insert(4)
-        ans = []
-        tree.print_tree(ans)
-        self.assertEqual(ans, [1, 5, 2, 4, 8, 7, 11])
-
-    #tests find for key that is present in tree,
-    #should be true
-    def test_findTrue(self):
-        tree = lca.BST()
-        tree.set_root(1)
-        tree.insert(5)
-        tree.insert(2)
-        tree.insert(8)
-        tree.insert(7)
-        tree.insert(11)
-        tree.insert(4)
-        n = tree.find(7)
-        assert n == True
-        self.assertEqual(tree.find(2), True)
-
-    #tests find for key that isn't present in tree,
-    #should be false
-    def test_findFalse(self):
-        tree = lca.BST()
-        self.assertEqual(tree.find(1), False)
-        tree.set_root(1)
-        tree.insert(5)
-        tree.insert(2)
-        tree.insert(8)
-        tree.insert(7)
-        tree.insert(11)
-        tree.insert(4)
-        self.assertEqual(tree.find(6), False)
+    def test_depth(self):
+        g = lca.Graph()
+        g.set_root(1)
+        g.insert(1, 2)
+        g.insert(1, 3)
+        g.insert(2, 3)
+        g.insert(2, 4)
+        g.insert(2, 5)
+        g.insert(5, 3)
+        g.insert(3, 6)
+        g.insert(6, 7)
+        self.assertEqual((g.get_node(1)).depth, 0)
+        self.assertEqual((g.get_node(2)).depth, 1)
+        self.assertEqual((g.get_node(3)).depth, 1)
+        self.assertEqual((g.get_node(4)).depth, 2)
+        self.assertEqual((g.get_node(5)).depth, 2)
+        self.assertEqual((g.get_node(6)).depth, 2)
+        self.assertEqual((g.get_node(7)).depth, 3)
+        g.insert(1, 7)
+        self.assertEqual((g.get_node(7)).depth, 1)
